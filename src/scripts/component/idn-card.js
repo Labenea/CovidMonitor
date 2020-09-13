@@ -16,9 +16,9 @@ month[9] = "October";
 month[10] = "November";
 month[11] = "December";
 
-var confirmed = 0;
-var death = 0;
-var recovered = 0;
+let confirmed = 0;
+let death = 0;
+let recovered = 0;
 
 class IdnCard extends HTMLElement {
   connectedCallback() {
@@ -41,11 +41,11 @@ class IdnCard extends HTMLElement {
   }
 
   render() {
-    var today = new Date();
-    var date = `${today.getDate()} ${
+    let today = new Date();
+    let date = `${today.getDate()} ${
       month[today.getMonth()]
     } ${today.getFullYear()}`;
-    var time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
     this.innerHTML = `
       <div class="container">
       <div>
