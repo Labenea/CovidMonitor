@@ -1,4 +1,5 @@
 import "regenerator-runtime";
+
 import "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./src/styles/style.css";
