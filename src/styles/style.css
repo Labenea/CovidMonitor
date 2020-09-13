@@ -1,0 +1,28 @@
+body {
+  background-color: #092532;
+}
+.text-torq {
+  color: #c7e2b2;
+}
+.link-color {
+  color: #89c9b8;
+}
+.link-color:hover {
+  text-decoration: none;
+  color: #89c9b8;
+}
+.card-bg {
+  background-color: #05151c;
+}
+.text-crd {
+  color: #e4fdda;
+}
+.d-color {
+  color: #fc7a57;
+}
+.rcvd-color {
+  color: #89c9b8;
+}
+.crfm-color {
+  color: #eafbea;
+}
