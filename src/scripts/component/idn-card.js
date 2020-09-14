@@ -1,64 +1,45 @@
-const { default: Axios } = require("axios");
-
-const baseURL = "https://covid.mathdro.id/api";
-const month = new Array();
-
-month[0] = "January";
-month[1] = "February";
-month[2] = "March";
-month[3] = "April";
-month[4] = "May";
-month[5] = "June";
-month[6] = "July";
-month[7] = "August";
-month[8] = "September";
-month[9] = "October";
-month[10] = "November";
-month[11] = "December";
+import Axios from "axios";
+import DateConvert from "../date-converter";
+import DataSource from "../data/data-source";
 
 let confirmed = 0;
 let death = 0;
 let recovered = 0;
-
+let pastConfirmed = 0;
 class IdnCard extends HTMLElement {
   connectedCallback() {
-    this.getData();
-  }
-
-  getData() {
-    Axios.get(`${baseURL}/countries/indonesia`)
+    DataSource.getIndData()
       .then((res) => {
-        confirmed = res.data.confirmed.value;
-        death = res.data.deaths.value;
-        recovered = res.data.recovered.value;
-        this.render();
+        confirmed = res.confirmed.value;
+        death = res.deaths.value;
+        recovered = res.recovered.value;
+        console.log(res);
       })
-      .catch((err) => {
-        console.log(err);
+      .then(() => {
+        DataSource.getDailyInd(1).then((res) => {
+          pastConfirmed = res.confirmed;
+          this.render();
+        });
       });
-    console.log("first");
     this.render();
   }
 
   render() {
-    let today = new Date();
-    let date = `${today.getDate()} ${
-      month[today.getMonth()]
-    } ${today.getFullYear()}`;
-    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
     this.innerHTML = `
       <div class="container">
       <div>
       <h1 class="text-center text-torq">INDONESIA</h1>
     </div>
-      <h6 class="text-center text-torq" >Last Updated ${date},${time}</h6>
+      <h6 class="text-center text-torq" >Last Updated ${DateConvert.dateConvert()},${DateConvert.timeConvert()}</h6>
         <div class="card-deck ">
             <div class="card card-bg mb-1 ">
               <div class="card-body">
                 <h1 class="text-center crfm-color card-text">${new Intl.NumberFormat(
                   "ID-IN"
                 ).format(confirmed)}</h1>
-                <p class="crfm-color text-center">Case</p>
+                <p class="crfm-color text-center">+${
+                  confirmed - pastConfirmed
+                } from yesterday</p>
                 <h5 class="text-center text-crd card-title">Confirmed</h5>
               </div>
            </div>

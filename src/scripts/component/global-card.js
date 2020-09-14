@@ -1,20 +1,6 @@
-const { default: Axios } = require("axios");
-
+import Axios from "axios";
+import DateConvert from "../date-converter";
 const baseURL = "https://covid.mathdro.id/api";
-const month = new Array();
-
-month[0] = "January";
-month[1] = "February";
-month[2] = "March";
-month[3] = "April";
-month[4] = "May";
-month[5] = "June";
-month[6] = "July";
-month[7] = "August";
-month[8] = "September";
-month[9] = "October";
-month[10] = "November";
-month[11] = "December";
 
 let confirmed = 0;
 let death = 0;
@@ -41,17 +27,12 @@ class GlobalCard extends HTMLElement {
   }
 
   render() {
-    let today = new Date();
-    let date = `${today.getDate()} ${
-      month[today.getMonth()]
-    } ${today.getFullYear()}`;
-    let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
     this.innerHTML = `
       <div class="container">
       <div>
       <h1 class="text-center text-torq">GLOBAL</h1>
     </div>
-      <h6 class="text-center text-torq" >Last Updated ${date},${time}</h6>
+      <h6 class="text-center text-torq" >Last Updated ${DateConvert.dateConvert()},${DateConvert.timeConvert()}</h6>
         <div class="card-deck ">
             <div class="card card-bg mb-1 ">
               <div class="card-body">
