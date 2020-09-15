@@ -6,15 +6,22 @@ const baseURL = "https://covid.mathdro.id/api";
 let confirmed = 0;
 let death = 0;
 let recovered = 0;
+let pastConfirmed = 0;
 
 class GlobalCard extends HTMLElement {
   connectedCallback() {
-    DataSource.getGlbData().then((res) => {
-      confirmed = res.confirmed.value;
-      death = res.deaths.value;
-      recovered = res.recovered.value;
-      this.render();
-    });
+    DataSource.getGlbData()
+      .then((res) => {
+        confirmed = res.confirmed.value;
+        death = res.deaths.value;
+        recovered = res.recovered.value;
+      })
+      .then(() => {
+        DataSource.getDailyGlb(0).then((res) => {
+          pastConfirmed = res.totalConfirmed;
+          this.render();
+        });
+      });
 
     this.render();
   }
@@ -32,7 +39,9 @@ class GlobalCard extends HTMLElement {
                 <h1 class="text-center crfm-color card-text">${new Intl.NumberFormat(
                   "ID-IN"
                 ).format(confirmed)}</h1>
-                <p class="crfm-color text-center">Case</p>
+                <p class="crfm-color text-center">+${
+                  confirmed - pastConfirmed
+                } from yesterday</p>
                 <h5 class="text-center text-crd card-title">Confirmed</h5>
               </div>
            </div>

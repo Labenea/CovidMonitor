@@ -1,4 +1,5 @@
 import Axios from "axios";
+import DateConvert from "../date-converter";
 
 const baseURL = "https://covid.mathdro.id/api";
 
@@ -39,7 +40,21 @@ class DataSource {
         return this.getDailyInd(a + 1);
       });
   }
-  static getDailyGlb() {}
+  static getDailyGlb(a) {
+    let today = DateConvert.getRightDate(a);
+    return Axios.get(`${baseURL}/daily`)
+      .then((res) => {
+        let result = res.data.filter((obj) => {
+          return obj.reportDate == today;
+        });
+        if (result.length < 1) {
+          return this.getDailyGlb(a + 1);
+        } else {
+          return result.shift();
+        }
+      })
+      .catch(() => {});
+  }
 }
 
 export default DataSource;

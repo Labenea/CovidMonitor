@@ -26,6 +26,15 @@ class DateConvert {
     let time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
     return time;
   }
+  static getRightDate(a) {
+    let today = new Date();
+
+    let dd = (today.getDate() - a < 10 ? "0" : "") + (today.getDate() - a);
+    let mm = (today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1);
+    let yyyy = today.getFullYear();
+
+    return `${yyyy}-${mm}-${dd}`;
+  }
 }
 
 export default DateConvert;
