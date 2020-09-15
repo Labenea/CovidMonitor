@@ -12,11 +12,18 @@ class DataSource {
         console.log(err);
       });
   }
-  static getGlbData() {}
+  static getGlbData() {
+    return Axios.get(`${baseURL}/`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   static getDailyInd(a) {
     let today = new Date();
-    console.log(a);
     return Axios.get(
       `${baseURL}/daily/${today.getFullYear()}-${today.getMonth() + 1}-${
         today.getDate() - a

@@ -13,7 +13,6 @@ class IdnCard extends HTMLElement {
         confirmed = res.confirmed.value;
         death = res.deaths.value;
         recovered = res.recovered.value;
-        console.log(res);
       })
       .then(() => {
         DataSource.getDailyInd(1).then((res) => {

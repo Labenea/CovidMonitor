@@ -1,5 +1,6 @@
 import Axios from "axios";
 import DateConvert from "../date-converter";
+import DataSource from "../data/data-source";
 const baseURL = "https://covid.mathdro.id/api";
 
 let confirmed = 0;
@@ -8,21 +9,13 @@ let recovered = 0;
 
 class GlobalCard extends HTMLElement {
   connectedCallback() {
-    this.getData();
-  }
+    DataSource.getGlbData().then((res) => {
+      confirmed = res.confirmed.value;
+      death = res.deaths.value;
+      recovered = res.recovered.value;
+      this.render();
+    });
 
-  getData() {
-    Axios.get(`${baseURL}`)
-      .then((res) => {
-        confirmed = res.data.confirmed.value;
-        death = res.data.deaths.value;
-        recovered = res.data.recovered.value;
-        this.render();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log("first");
     this.render();
   }
 
